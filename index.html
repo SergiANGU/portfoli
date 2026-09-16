@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Sergi Andrés Gutiérrez — Full Stack Developer freelance en Barcelona, especializado en backend .NET/C# y Kotlin, integraciones ERP y refactorización de rendimiento.">
+<title>Sergi Gutiérrez — Full Stack Developer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#0b0f14;
+    --surface:#121820;
+    --surface-2:#171f29;
+    --border:#26323f;
+    --border-soft:#1c2530;
+    --text:#e7edf4;
+    --text-muted:#8b98a8;
+    --text-dim:#5c6b7a;
+    --accent:#e8a33d;
+    --accent-2:#5fb3b3;
+    --accent-3:#9c8cff;
+    --ok:#6fcf97;
+    --radius:7px;
+    --mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.55;
+    margin:0;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent);color:#12100a;}
+  a{color:inherit;}
+  .container{
+    width:100%;
+    max-width:1080px;
+    margin-inline:auto;
+    padding-inline:clamp(16px,4vw,32px);
+  }
+  img{max-width:100%;}
+  [hidden]{display:none!important;}
+
+  h1,h2,h3{
+    font-family:var(--mono);
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin:0;
+    text-wrap:balance;
+  }
+  p{margin:0;}
+  .mono{font-family:var(--mono);}
+
+  a:focus-visible,button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:3px;
+  }
+
+  /* ---------- Nav ---------- */
+  header.site-nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(11,15,20,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .nav-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding-block:14px;
+    flex-wrap:wrap;
+  }
+  .brand{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:1rem;
+    color:var(--text);
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    white-space:nowrap;
+  }
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);flex:none;}
+  nav.links{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    font-family:var(--mono);
+    font-size:0.85rem;
+  }
+  nav.links a{
+    text-decoration:none;
+    color:var(--text-muted);
+    padding-block:4px;
+    border-bottom:1px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  nav.links a:hover{color:var(--accent-2);border-color:var(--accent-2);}
+  .nav-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .lang-switch{
+    display:flex;
+    gap:2px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:3px;
+    font-family:var(--mono);
+    font-size:0.72rem;
+  }
+  .lang-switch button{
+    appearance:none;border:none;background:transparent;color:var(--text-muted);
+    padding:5px 10px;border-radius:999px;cursor:pointer;letter-spacing:.04em;
+  }
+  .lang-switch button[aria-pressed="true"]{background:var(--accent);color:#1a1305;font-weight:700;}
+  .btn{
+    font-family:var(--mono);
+    font-size:0.82rem;
+    font-weight:600;
+    text-decoration:none;
+    padding:8px 16px;
+    border-radius:var(--radius);
+    border:1px solid var(--accent);
+    color:#1a1305;
+    background:var(--accent);
+    cursor:pointer;
+    white-space:nowrap;
+    transition:filter .15s ease, transform .15s ease;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn:active{transform:translateY(1px);}
+  .btn.ghost{
+    background:transparent;color:var(--text);border-color:var(--border);
+  }
+  .btn.ghost:hover{border-color:var(--accent-2);color:var(--accent-2);}
+
+  section{padding-block:clamp(56px,9vw,96px);}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:0.8rem;
+    color:var(--accent-2);
+    margin-bottom:14px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .eyebrow::before{content:"//";color:var(--text-dim);}
+
+  /* ---------- Hero ---------- */
+  .hero{padding-top:clamp(48px,9vw,88px);}
+  .hero-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:clamp(28px,5vw,56px);
+    align-items:center;
+  }
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-grid .terminal{order:2;}
+    .hero-grid .hero-copy{order:1;}
+  }
+  .hero-copy h1{
+    font-size:clamp(1.9rem,4.2vw,3rem);
+    line-height:1.12;
+    margin-bottom:18px;
+  }
+  .hero-copy .sub{
+    font-size:1.05rem;
+    color:var(--text-muted);
+    max-width:46ch;
+    margin-bottom:28px;
+  }
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+
+  .terminal{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 20px 60px -30px rgba(0,0,0,0.7);
+  }
+  .terminal-bar{
+    display:flex;align-items:center;gap:8px;
+    padding:10px 14px;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--border);
+  }
+  .terminal-bar .tdot{width:10px;height:10px;border-radius:50%;}
+  .tdot.r{background:#e5675f;}
+  .tdot.y{background:#e8c53d;}
+  .tdot.g{background:#6fcf97;}
+  .terminal-bar .tname{
+    margin-left:8px;font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);
+  }
+  .terminal-body{
+    padding:18px 20px 22px;
+    font-family:var(--mono);
+    font-size:0.86rem;
+    line-height:1.75;
+    overflow-x:auto;
+  }
+  .tline{white-space:pre-wrap;}
+  .prompt{color:var(--accent-2);}
+  .prompt .path{color:var(--accent-3);}
+  .out{color:var(--text-muted);}
+  .out.strong{color:var(--text);font-weight:600;}
+  .cursor{
+    display:inline-block;width:8px;height:1em;background:var(--accent);
+    vertical-align:text-bottom;margin-left:2px;
+    animation:blink 1s steps(1) infinite;
+  }
+  @media (prefers-reduced-motion:reduce){.cursor{animation:none;opacity:1;}}
+  @keyframes blink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
+  .status-bar{
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    padding:8px 14px;
+    background:var(--surface-2);
+    border-top:1px solid var(--border);
+    font-family:var(--mono);font-size:0.68rem;color:var(--text-dim);
+  }
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+    gap:clamp(28px,5vw,56px);
+  }
+  @media (max-width:820px){.about-grid{grid-template-columns:1fr;}}
+  .about-grid h2{font-size:clamp(1.4rem,2.6vw,1.8rem);margin-bottom:18px;}
+  .about-grid p.body-text{
+    color:var(--text-muted);
+    font-size:1.02rem;
+    max-width:58ch;
+  }
+  .facts{
+    display:flex;flex-direction:column;gap:0;
+    border-top:1px solid var(--border-soft);
+  }
+  .facts .fact{
+    padding-block:14px;
+    border-bottom:1px solid var(--border-soft);
+    font-size:0.92rem;
+    color:var(--text-muted);
+  }
+  .facts .fact b{color:var(--text);font-weight:600;}
+
+  /* ---------- Services ---------- */
+  .svc-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+  }
+  @media (max-width:700px){.svc-grid{grid-template-columns:1fr;}}
+  .svc-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .svc-card:hover{border-color:var(--accent-2);transform:translateY(-2px);}
+  .svc-route{
+    display:flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:0.86rem;
+    margin-bottom:12px;
+    flex-wrap:wrap;
+  }
+  .method{
+    font-weight:700;font-size:0.7rem;letter-spacing:.03em;
+    padding:3px 8px;border-radius:4px;
+  }
+  .method.get{background:rgba(95,179,179,0.14);color:var(--accent-2);}
+  .method.post{background:rgba(232,163,61,0.14);color:var(--accent);}
+  .method.patch{background:rgba(156,140,255,0.16);color:var(--accent-3);}
+  .svc-path{color:var(--text);word-break:break-word;}
+  .svc-desc{color:var(--text-muted);font-size:0.94rem;}
+
+  /* ---------- Projects ---------- */
+  .log{display:flex;flex-direction:column;gap:2px;}
+  .commit{
+    display:grid;
+    grid-template-columns:120px minmax(0,1fr);
+    gap:18px;
+    padding-block:22px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .commit:first-child{border-top:1px solid var(--border-soft);}
+  @media (max-width:640px){
+    .commit{grid-template-columns:1fr;gap:8px;}
+  }
+  .commit-hash{
+    font-family:var(--mono);font-size:0.82rem;color:var(--accent-3);
+    padding-top:2px;
+  }
+  .commit-hash .label{display:block;color:var(--text-dim);font-size:0.68rem;margin-bottom:4px;letter-spacing:.04em;}
+  .commit-name{font-size:1.05rem;font-weight:600;margin-bottom:6px;}
+  .commit-msg{
+    font-family:var(--mono);font-size:0.86rem;color:var(--text-muted);
+    margin-bottom:12px;
+  }
+  .commit-msg .prefix{color:var(--ok);}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{
+    font-family:var(--mono);font-size:0.72rem;color:var(--text-muted);
+    border:1px solid var(--border);border-radius:999px;padding:3px 10px;
+  }
+
+  /* ---------- Stack ---------- */
+  .manifest{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:clamp(20px,3vw,32px);
+    font-family:var(--mono);
+  }
+  .manifest .mline{color:var(--text-dim);}
+  .stack-cols{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:20px;
+    margin-top:8px;
+  }
+  @media (max-width:760px){.stack-cols{grid-template-columns:1fr;}}
+  .stack-col h4{
+    font-family:var(--mono);font-size:0.78rem;color:var(--accent-2);
+    margin:0 0 10px;font-weight:600;letter-spacing:.03em;
+  }
+  .stack-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+  .stack-col li{font-size:0.9rem;color:var(--text);}
+  .stack-col li::before{content:"– ";color:var(--text-dim);}
+
+  /* ---------- Contact ---------- */
+  .contact-box{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:clamp(28px,5vw,44px);
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+  .contact-cmd{font-family:var(--mono);color:var(--accent-2);font-size:0.95rem;}
+  .contact-text{color:var(--text-muted);max-width:60ch;font-size:1.02rem;}
+  .contact-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .avail-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:0.82rem;color:var(--ok);
+  }
+  .avail-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 6px var(--ok);}
+
+  footer{
+    border-top:1px solid var(--border-soft);
+    padding-block:28px;
+  }
+  .footer-row{
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:0.76rem;color:var(--text-dim);
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="container nav-row">
+    <a class="brand" href="#top"><span class="dot"></span>sergi<span style="color:var(--text-dim)">@</span>dev</a>
+    <nav class="links">
+      <a href="#about" data-i18n="nav.about">Sobre mí</a>
+      <a href="#services" data-i18n="nav.services">Servicios</a>
+      <a href="#projects" data-i18n="nav.projects">Proyectos</a>
+      <a href="#stack" data-i18n="nav.stack">Stack</a>
+      <a href="#contact" data-i18n="nav.contact">Contacto</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch" role="group" aria-label="Idioma / Language">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="ca" aria-pressed="false">CA</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="btn" href="#contact" data-i18n="nav.talk">Hablemos</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+          <span class="tname">sergi@dev — zsh</span>
+        </div>
+        <div class="terminal-body">
+          <div class="tline"><span class="prompt">sergi@dev:~$</span> whoami</div>
+          <div class="tline out strong">Sergi Andrés Gutiérrez</div>
+          <div class="tline out">Full Stack Developer — backend-first</div>
+          <div class="tline">&nbsp;</div>
+          <div class="tline"><span class="prompt">sergi@dev:~$</span> <span data-i18n="hero.loc_cmd">cat ubicacion.txt</span></div>
+          <div class="tline out" data-i18n="hero.loc_val">Barcelona, España · trabajo en remoto</div>
+          <div class="tline">&nbsp;</div>
+          <div class="tline"><span class="prompt">sergi@dev:~$</span> <span data-i18n="hero.avail_cmd">cat disponibilidad.txt</span></div>
+          <div class="tline out" data-i18n="hero.avail_val">Abierto a nuevos proyectos freelance</div>
+          <div class="tline">&nbsp;</div>
+          <div class="tline"><span class="prompt">sergi@dev:~$</span> <span class="cursor" aria-hidden="true"></span></div>
+        </div>
+        <div class="status-bar">
+          <span>⎇ main</span>
+          <span>UTF-8</span>
+          <span>.NET · Kotlin</span>
+        </div>
+      </div>
+      <div class="hero-copy">
+        <h1 data-i18n="hero.headline">El backend en el que tu negocio puede confiar.</h1>
+        <p class="sub" data-i18n="hero.sub">Diseño e implemento APIs, integraciones ERP y sistemas a medida en .NET y Kotlin — desde cero o dentro de código heredado.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#projects" data-i18n="hero.view_projects">Ver proyectos</a>
+          <a class="btn ghost" href="#contact" data-i18n="hero.talk">Hablemos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container about-grid">
+      <div>
+        <div class="eyebrow">about.md</div>
+        <h2 data-i18n="nav.about">Sobre mí</h2>
+        <p class="body-text" style="margin-top:18px" data-i18n="about.body">Soy desarrollador full stack con foco en backend, afincado en Barcelona. Autónomo desde 2026, y antes de eso pasé por UPCnet — la empresa TI de la Universitat Politècnica de Catalunya — y por consultoras y empresas industriales, siempre en la misma parte del sistema: la que no puede fallar.</p>
+      </div>
+      <div class="facts">
+        <div class="fact" data-i18n="about.fact_base">Sede: Barcelona, España (remoto)</div>
+        <div class="fact" data-i18n="about.fact_exp">Experiencia: UPCnet, InnoIT Consulting, Companyia General Carnia, Ray Electric Motors</div>
+        <div class="fact" data-i18n="about.fact_edu">Formación: Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)</div>
+        <div class="fact" data-i18n="about.fact_avail">Disponibilidad: proyectos freelance, integraciones y sistemas a medida</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <div class="eyebrow">services.md</div>
+      <h2 style="margin-bottom:22px" data-i18n="nav.services">Servicios</h2>
+      <div class="svc-grid">
+        <div class="svc-card">
+          <div class="svc-route"><span class="method get">GET</span><span class="svc-path" data-i18n="services.s1_path">/desarrollo-backend</span></div>
+          <p class="svc-desc" data-i18n="services.s1_desc">APIs REST y servicios en .NET/C# y Kotlin, diseñados para escalar sin sorpresas.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-route"><span class="method post">POST</span><span class="svc-path" data-i18n="services.s2_path">/integraciones-erp</span></div>
+          <p class="svc-desc" data-i18n="services.s2_desc">Conecto tu ERP (Odoo, sistemas propios) con tiendas online, facturación y proveedores externos.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-route"><span class="method patch">PATCH</span><span class="svc-path" data-i18n="services.s3_path">/optimizacion-rendimiento</span></div>
+          <p class="svc-desc" data-i18n="services.s3_desc">Refactorización de código heredado y bases de datos SQL Server para que dejen de ser un cuello de botella.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-route"><span class="method get">GET</span><span class="svc-path" data-i18n="services.s4_path">/apps-multiplataforma</span></div>
+          <p class="svc-desc" data-i18n="services.s4_desc">Apps móviles con Kotlin Multiplatform y Compose: un único código para Android e iOS.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <div class="eyebrow">git log --oneline</div>
+      <h2 style="margin-bottom:8px" data-i18n="nav.projects">Proyectos</h2>
+      <div class="log">
+        <div class="commit">
+          <div class="commit-hash"><span class="label">ref</span>a3f9c1e</div>
+          <div>
+            <div class="commit-name" data-i18n="projects.p1_name">FAME Custom Products</div>
+            <div class="commit-msg"><span class="prefix">refactor(backend):</span> <span data-i18n="projects.p1_msg">migración completa a ASP.NET Core y a la nueva API de Makito</span></div>
+            <div class="tags"><span class="tag">ASP.NET Core</span><span class="tag">C#</span><span class="tag">REST API</span><span class="tag">Deploy</span></div>
+          </div>
+        </div>
+        <div class="commit">
+          <div class="commit-hash"><span class="label">ref</span>1c88af2</div>
+          <div>
+            <div class="commit-name" data-i18n="projects.p3_name">Pantri</div>
+            <div class="commit-msg"><span class="prefix">feat(mobile):</span> <span data-i18n="projects.p3_msg">inventario de comida compartido para pisos, con Kotlin Multiplatform y Firebase</span></div>
+            <div class="tags"><span class="tag">Kotlin Multiplatform</span><span class="tag">Firebase</span><span class="tag">Compose</span></div>
+          </div>
+        </div>
+        <div class="commit">
+          <div class="commit-hash"><span class="label">ref</span>9b0e77f</div>
+          <div>
+            <div class="commit-name" data-i18n="projects.p4_name">App de gestión — equipo de Jiu-Jitsu</div>
+            <div class="commit-msg"><span class="prefix">feat(mobile):</span> <span data-i18n="projects.p4_msg">gestión de equipos y socios, precedida de investigación de mercado y especificación técnica</span></div>
+            <div class="tags"><span class="tag">Kotlin Multiplatform</span><span class="tag">Compose</span><span class="tag">Research</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="container">
+      <div class="eyebrow">package.json</div>
+      <h2 style="margin-bottom:22px" data-i18n="nav.stack">Stack</h2>
+      <div class="manifest">
+        <div class="mline">{</div>
+        <div class="stack-cols">
+          <div class="stack-col">
+            <h4>backend</h4>
+            <ul>
+              <li>.NET / C#</li>
+              <li>ASP.NET Core</li>
+              <li>Entity Framework Core</li>
+              <li>Kotlin</li>
+              <li>Spring Boot</li>
+              <li>SQL Server</li>
+            </ul>
+          </div>
+          <div class="stack-col">
+            <h4>frontend</h4>
+            <ul>
+              <li>Vue.js</li>
+              <li>React</li>
+              <li>Blazor</li>
+            </ul>
+          </div>
+          <div class="stack-col">
+            <h4>devops</h4>
+            <ul>
+              <li>Docker</li>
+              <li>Azure DevOps</li>
+              <li>GitLab CI</li>
+              <li>Railway</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mline">}</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="eyebrow">contact.sh</div>
+      <div class="contact-box">
+        <div class="contact-cmd">sergi@dev:~$ contact --email</div>
+        <p class="contact-text" data-i18n="contact.text">¿Tienes un backend que arreglar, un ERP que integrar o una idea que construir desde cero? Escríbeme y hablamos sin compromiso.</p>
+        <div class="contact-actions">
+          <a class="btn" href="mailto:andresgutierrezsergi@gmail.com" data-i18n="contact.cta">Enviar correo</a>
+          <span class="avail-pill"><span class="dot"></span><span data-i18n="contact.avail">Disponible para proyectos</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <span>Sergi Andrés Gutiérrez · Barcelona · IAE 763 · <span data-i18n="footer.role">Desarrollador autónomo</span></span>
+    <span data-i18n="footer.tagline">Sin plantillas, sin relleno.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var I18N = {
+    "nav.about":{es:"Sobre mí",ca:"Sobre mi",en:"About"},
+    "nav.services":{es:"Servicios",ca:"Serveis",en:"Services"},
+    "nav.projects":{es:"Proyectos",ca:"Projectes",en:"Projects"},
+    "nav.stack":{es:"Stack",ca:"Stack",en:"Stack"},
+    "nav.contact":{es:"Contacto",ca:"Contacte",en:"Contact"},
+    "nav.talk":{es:"Hablemos",ca:"Parlem-ne",en:"Let's talk"},
+
+    "hero.loc_cmd":{es:"cat ubicacion.txt",ca:"cat ubicacio.txt",en:"cat location.txt"},
+    "hero.loc_val":{es:"Barcelona, España · trabajo en remoto",ca:"Barcelona · treball en remot",en:"Barcelona, Spain · remote-friendly"},
+    "hero.avail_cmd":{es:"cat disponibilidad.txt",ca:"cat disponibilitat.txt",en:"cat availability.txt"},
+    "hero.avail_val":{es:"Abierto a nuevos proyectos freelance",ca:"Obert a nous projectes freelance",en:"Open to new freelance projects"},
+    "hero.headline":{es:"El backend en el que tu negocio puede confiar.",ca:"El backend en què el teu negoci pot confiar.",en:"Backend systems your business can trust."},
+    "hero.sub":{es:"Diseño e implemento APIs, integraciones ERP y sistemas a medida en .NET y Kotlin — desde cero o dentro de código heredado.",ca:"Dissenyo i implemento APIs, integracions ERP i sistemes a mida en .NET i Kotlin — des de zero o dins de codi heretat.",en:"I design and build APIs, ERP integrations and custom systems in .NET and Kotlin — from scratch or inside legacy code."},
+    "hero.view_projects":{es:"Ver proyectos",ca:"Veure projectes",en:"View projects"},
+    "hero.talk":{es:"Hablemos",ca:"Parlem-ne",en:"Let's talk"},
+
+    "about.body":{
+      es:"Soy desarrollador full stack con foco en backend, afincado en Barcelona. Autónomo desde 2026, y antes de eso pasé por UPCnet — la empresa TI de la Universitat Politècnica de Catalunya — y por consultoras y empresas industriales, siempre en la misma parte del sistema: la que no puede fallar.",
+      ca:"Sóc desenvolupador full stack amb focus en backend, establert a Barcelona. Autònom des del 2026, i abans vaig passar per UPCnet — l'empresa TI de la Universitat Politècnica de Catalunya — i per consultores i empreses industrials, sempre a la mateixa part del sistema: la que no pot fallar.",
+      en:"I'm a full stack developer focused on backend, based in Barcelona. Freelance since 2026, and before that I worked at UPCnet — the IT company of the Universitat Politècnica de Catalunya — plus consultancies and industrial companies, always on the same part of the system: the one that can't fail."
+    },
+    "about.fact_base":{es:"Sede: Barcelona, España (remoto)",ca:"Seu: Barcelona (remot)",en:"Based in: Barcelona, Spain (remote-friendly)"},
+    "about.fact_exp":{es:"Experiencia: UPCnet, InnoIT Consulting, Companyia General Carnia, Ray Electric Motors",ca:"Experiència: UPCnet, InnoIT Consulting, Companyia General Carnia, Ray Electric Motors",en:"Experience: UPCnet, InnoIT Consulting, Companyia General Carnia, Ray Electric Motors"},
+    "about.fact_edu":{es:"Formación: Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)",ca:"Formació: Tècnic Superior en Desenvolupament d'Aplicacions Multiplataforma (DAM)",en:"Education: Higher Technician in Multiplatform Application Development (DAM)"},
+    "about.fact_avail":{es:"Disponibilidad: proyectos freelance, integraciones y sistemas a medida",ca:"Disponibilitat: projectes freelance, integracions i sistemes a mida",en:"Availability: freelance projects, integrations and custom systems"},
+
+    "services.s1_path":{es:"/desarrollo-backend",ca:"/desenvolupament-backend",en:"/backend-development"},
+    "services.s1_desc":{es:"APIs REST y servicios en .NET/C# y Kotlin, diseñados para escalar sin sorpresas.",ca:"APIs REST i serveis en .NET/C# i Kotlin, dissenyats per escalar sense sorpreses.",en:"REST APIs and services in .NET/C# and Kotlin, built to scale without surprises."},
+    "services.s2_path":{es:"/integraciones-erp",ca:"/integracions-erp",en:"/erp-integrations"},
+    "services.s2_desc":{es:"Conecto tu ERP (Odoo, sistemas propios) con tiendas online, facturación y proveedores externos.",ca:"Connecto el teu ERP (Odoo, sistemes propis) amb botigues en línia, facturació i proveïdors externs.",en:"Connecting your ERP (Odoo, in-house systems) with online stores, invoicing and external suppliers."},
+    "services.s3_path":{es:"/optimizacion-rendimiento",ca:"/optimitzacio-rendiment",en:"/performance-optimization"},
+    "services.s3_desc":{es:"Refactorización de código heredado y bases de datos SQL Server para que dejen de ser un cuello de botella.",ca:"Refactorització de codi heretat i bases de dades SQL Server perquè deixin de ser un coll d'ampolla.",en:"Refactoring legacy code and SQL Server databases so they stop being the bottleneck."},
+    "services.s4_path":{es:"/apps-multiplataforma",ca:"/apps-multiplataforma",en:"/cross-platform-apps"},
+    "services.s4_desc":{es:"Apps móviles con Kotlin Multiplatform y Compose: un único código para Android e iOS.",ca:"Apps mòbils amb Kotlin Multiplatform i Compose: un únic codi per Android i iOS.",en:"Mobile apps with Kotlin Multiplatform and Compose — one codebase for Android and iOS."},
+
+    "projects.p1_name":{es:"FAME Custom Products",ca:"FAME Custom Products",en:"FAME Custom Products"},
+    "projects.p1_msg":{es:"migración completa a ASP.NET Core y a la nueva API de Makito",ca:"migració completa a ASP.NET Core i a la nova API de Makito",en:"full migration to ASP.NET Core and the new Makito API"},
+    "projects.p2_name":{es:"Global Solutions · ERP Odoo",ca:"Global Solutions · ERP Odoo",en:"Global Solutions · Odoo ERP"},
+    "projects.p2_msg":{es:"trazabilidad de producción, integración con WooCommerce y migración desde Holded",ca:"traçabilitat de producció, integració amb WooCommerce i migració des de Holded",en:"production traceability, WooCommerce integration and migration from Holded"},
+    "projects.p3_name":{es:"Pantri",ca:"Pantri",en:"Pantri"},
+    "projects.p3_msg":{es:"inventario de comida compartido para pisos, con Kotlin Multiplatform y Firebase",ca:"inventari d'aliments compartit per a pisos, amb Kotlin Multiplatform i Firebase",en:"shared food inventory for flatmates, built with Kotlin Multiplatform and Firebase"},
+    "projects.p4_name":{es:"App de gestión — equipo de Jiu-Jitsu",ca:"App de gestió — equip de Jiu-Jitsu",en:"Team management app — Jiu-Jitsu"},
+    "projects.p4_msg":{es:"gestión de equipos y socios, precedida de investigación de mercado y especificación técnica",ca:"gestió d'equips i socis, precedida de recerca de mercat i especificació tècnica",en:"team and member management, preceded by market research and a technical spec"},
+
+    "contact.text":{es:"¿Tienes un backend que arreglar, un ERP que integrar o una idea que construir desde cero? Escríbeme y hablamos sin compromiso.",ca:"Tens un backend per arreglar, un ERP per integrar o una idea per construir des de zero? Escriu-me i en parlem sense compromís.",en:"Got a backend to fix, an ERP to integrate, or an idea to build from scratch? Reach out and let's talk, no strings attached."},
+    "contact.cta":{es:"Enviar correo",ca:"Enviar correu",en:"Send email"},
+    "contact.avail":{es:"Disponible para proyectos",ca:"Disponible per a projectes",en:"Available for projects"},
+
+    "footer.role":{es:"Desarrollador autónomo",ca:"Desenvolupador autònom",en:"Freelance developer"},
+    "footer.tagline":{es:"Sin plantillas, sin relleno.",ca:"Sense plantilles, sense farciment.",en:"No templates, no filler."}
+  };
+
+  function applyLang(lang){
+    document.documentElement.setAttribute('lang', lang === 'ca' ? 'ca' : (lang === 'en' ? 'en' : 'es'));
+    var nodes = document.querySelectorAll('[data-i18n]');
+    for (var i=0;i<nodes.length;i++){
+      var key = nodes[i].getAttribute('data-i18n');
+      var entry = I18N[key];
+      if (entry && entry[lang] != null){
+        nodes[i].textContent = entry[lang];
+      }
+    }
+    var btns = document.querySelectorAll('.lang-switch button');
+    for (var j=0;j<btns.length;j++){
+      btns[j].setAttribute('aria-pressed', btns[j].getAttribute('data-lang') === lang ? 'true' : 'false');
+    }
+    try{ localStorage.setItem('sergi_portfolio_lang', lang); }catch(e){}
+  }
+
+  var initial = 'es';
+  try{
+    var saved = localStorage.getItem('sergi_portfolio_lang');
+    if (saved === 'es' || saved === 'ca' || saved === 'en') initial = saved;
+  }catch(e){}
+
+  var switchBtns = document.querySelectorAll('.lang-switch button');
+  for (var k=0;k<switchBtns.length;k++){
+    switchBtns[k].addEventListener('click', function(){
+      applyLang(this.getAttribute('data-lang'));
+    });
+  }
+
+  applyLang(initial);
+})();
+</script>
+</body>
+</html>
